@@ -98,7 +98,7 @@ const DataPokemonList = (props: PropsDataPokemonList)=> {
 
   const getDescriptionMove = async  (url: any) => {
     const moveData = await SearchApi.searchPokemon(url);
-    setDescription(moveData.effect_entries[0].effect);
+    setDescription(moveData?.effect_entries[0].effect);
   };
 
   useEffect(() => {
@@ -140,19 +140,6 @@ export default function CardPokemon(props: Props) {
     fetchData();
   }, []);
 
-  const asyncReq = async (url) => {
-    const moveData = await SearchApi.searchPokemon(url);
-
-    return moveData.effect_entries[0].effect
-   
-  };
-
-
-  const getDescriptionMove = async  (url: any) => {
-    const moveData = await SearchApi.searchPokemon(url);
-    return moveData.effect_entries[0].effect;
-  };
-
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -178,13 +165,11 @@ export default function CardPokemon(props: Props) {
           <Typography gutterBottom>Moves</Typography>
 
           {dataPokemon &&
-            dataPokemon?.moves.map( (element, index) => {
+            dataPokemon?.moves.map( (element) => {
               return (
                 <DataPokemonList data={element}/>
               );
             })}
-          {/* {`${dataPokemon ? `${dataPokemon?.moves[0].move.name}:` : ""}`}{" "}
-            {movePokemon ? movePokemon.effect_entries[0].effect : ""} */}
         </CardContent>
       </CardActionArea>
     </Card>
