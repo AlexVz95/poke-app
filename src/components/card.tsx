@@ -88,6 +88,31 @@ interface MoveObject {
   type: any;
 }
 
+type PropsDataPokemonList = {
+  data: MoveObj
+}
+
+const DataPokemonList = (props: PropsDataPokemonList)=> {
+
+  const [description, setDescription] = useState<string>("");
+
+  const getDescriptionMove = async  (url: any) => {
+    const moveData = await SearchApi.searchPokemon(url);
+    setDescription(moveData.effect_entries[0].effect);
+  };
+
+  useEffect(() => {
+    getDescriptionMove(props.data.move.url)
+  }, [])
+
+  return (
+    <Typography gutterBottom>
+        {props.data.move.name}:{" "}
+      {`${ description}`}
+    </Typography>
+  );
+}
+
 export default function CardPokemon(props: Props) {
   const { name, endpoint } = props;
   const classes = useStyles();
@@ -123,13 +148,9 @@ export default function CardPokemon(props: Props) {
   };
 
 
-  const getDescriptionMove = (url: any) => {
-    const response = asyncReq(url);
-    
-    console.log(response)
-
-
-    return "algo";
+  const getDescriptionMove = async  (url: any) => {
+    const moveData = await SearchApi.searchPokemon(url);
+    return moveData.effect_entries[0].effect;
   };
 
   return (
@@ -157,12 +178,9 @@ export default function CardPokemon(props: Props) {
           <Typography gutterBottom>Moves</Typography>
 
           {dataPokemon &&
-            dataPokemon?.moves.map((element, index) => {
+            dataPokemon?.moves.map( (element, index) => {
               return (
-                <Typography gutterBottom>
-                  {element.move.name}:{" "}
-                  {`${getDescriptionMove(element.move.url)}`}
-                </Typography>
+                <DataPokemonList data={element}/>
               );
             })}
           {/* {`${dataPokemon ? `${dataPokemon?.moves[0].move.name}:` : ""}`}{" "}
