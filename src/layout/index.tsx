@@ -20,7 +20,7 @@ import SearchApi from "../services/pokemonService";
 import ImgMediaCard from "../components/custom-card";
 import useStyles from './style'
 import Copyright from '../components/copyright'
-
+import StickyHeadTable from '../components/custom-table'
 interface Pokemon {
   name: string;
   url: string;
@@ -30,6 +30,7 @@ export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [dataPokemon, setDataPokemon] = useState<null | Pokemon[]>(null);
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -132,6 +133,9 @@ export default function Dashboard() {
             <Grid container spacing={3}>
               <Grid container item xs={12} spacing={3}>
                 <FormRow />
+              </Grid>
+              <Grid container item xs={12} spacing={3}>
+                <StickyHeadTable />
               </Grid>
             </Grid>
             <Box pt={4}>

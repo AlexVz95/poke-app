@@ -6,4 +6,7 @@ export default class SearchApi {
 
   static searchPokemon = (url: string): Promise<Promise<any>> =>
     request(url, "GET");
+
+    static searchData = (): Promise<Promise<any>> =>
+    request("https://pokeapi.co/api/v2/pokemon?limit=100&offset=100", "GET");
 }
